@@ -11,8 +11,8 @@ if not DATABASE_URL:
 
 # Added connect_args to handle the 'ssl-mode=REQUIRED' from Aiven
 engine = create_engine(
-    DATABASE_URL, 
-    connect_args={"ssl": {"ca": "/etc/ssl/certs/ca-certificates.crt"}} if "aivencloud.com" in DATABASE_URL else {}
+    DATABASE_URL,
+    connect_args={"ssl": {"ca": "/etc/ssl/certs/ca-certificates.crt"}} if "render" in os.environ.get("RENDER_EXTERNAL_HOSTNAME", "") else {}
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
